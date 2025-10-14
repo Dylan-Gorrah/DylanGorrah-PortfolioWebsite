@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/DylanGorrah-PortfolioWebsite/static/css/main.bd4cd1cb.css",
+    "main.js": "/DylanGorrah-PortfolioWebsite/static/js/main.9bcb49c8.js",
+    "index.html": "/DylanGorrah-PortfolioWebsite/index.html",
+    "main.bd4cd1cb.css.map": "/DylanGorrah-PortfolioWebsite/static/css/main.bd4cd1cb.css.map",
+    "main.9bcb49c8.js.map": "/DylanGorrah-PortfolioWebsite/static/js/main.9bcb49c8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bd4cd1cb.css",
+    "static/js/main.9bcb49c8.js"
+  ]
+}
