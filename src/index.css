@@ -1,13 +1,555 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+  box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Remove scrollbar for all browsers */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scroll-behavior: smooth;
+  background-color: #000000;
+  overflow-x: hidden;
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+  background-color: #000000;
+  overflow-x: hidden;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* ========== KEYFRAME ANIMATIONS ========== */
+
+@keyframes blurSlideReveal {
+  0% {
+    opacity: 0;
+    filter: blur(20px);
+    transform: translateX(100px);
+  }
+  50% {
+    opacity: 0.5;
+    filter: blur(10px);
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, var(--float-distance, -15px));
+  }
+}
+
+@keyframes bubbleAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes orbitRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes referencesExpand {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+    filter: blur(10px);
+  }
+  60% {
+    transform: scale(1.02) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes referenceCardAppear {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ========== GLOW PULSE ANIMATION FOR PSYCHOLOGY BUTTON ========== */
+@keyframes glowPulse {
+  0% {
+    box-shadow: 
+      0 4px 20px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 4px 40px rgba(255, 255, 255, 0.4),
+      0 8px 60px rgba(255, 255, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  100% {
+    box-shadow: 
+      0 4px 20px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+  50% {
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.8),
+      0 0 20px rgba(255, 255, 255, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.4);
+  }
+  100% {
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+/* ========== PREMIUM PSYCHOLOGY BUTTON ========== */
+
+.psychology-btn {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.psychology-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.psychology-btn:hover::before {
+  left: 100%;
+}
+
+.psychology-btn .btn-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.psychology-btn:hover .btn-glow {
+  opacity: 1;
+}
+
+.psychology-btn:hover {
+  transform: translateY(2px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 4px 20px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.psychology-btn:active {
+  transform: translateY(3px);
+}
+
+.psychology-btn .btn-text {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.9) 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: subtleShimmer 3s ease-in-out infinite;
+}
+
+@keyframes subtleShimmer {
+  0%, 100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* GLOW PULSE ACTIVE STATE */
+.psychology-btn.glow-pulse-active {
+  animation: glowPulse 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.psychology-btn.glow-pulse-active .btn-text {
+  animation: textGlow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .psychology-btn {
+    backdrop-filter: blur(30px);
+  }
+}
+
+.blur-slide-reveal {
+  animation: blurSlideReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+.references-expand {
+  animation: referencesExpand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.reference-card {
+  animation: referenceCardAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.glass-morph {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-linear {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-linear:hover {
+  transform: translateY(-1px);
+}
+
+.progress-dot {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.progress-dot.active {
+  background: white;
+  transform: scale(1.5);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* MOBILE: Smaller active dot scale */
+@media (max-width: 768px) {
+  .progress-dot.active {
+    transform: scale(1.8);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  }
+}
+
+.card-linear {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-linear:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.fade-slide-up {
+  animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.scale-in {
+  animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.slide-in {
+  animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.orbit-smooth {
+  transition: transform 0.1s linear;
+}
+
+.pulse-glow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.section-label {
+  white-space: nowrap;
+}
+
+/* ========== ORBITAL PROFILE - CLASSES ========== */
+
+.orbital-bubble {
+  transition: opacity 0.3s ease-out;
+  will-change: transform, opacity;
+}
+
+.metallic-bubble {
+  animation: gentleFloat 4s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+
+.metallic-bubble:hover {
+  transform: scale(1.15) !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* MOBILE: Smaller hover scale for metallic bubbles */
+@media (max-width: 768px) {
+  .metallic-bubble:hover {
+    transform: scale(1.08) !important;
+  }
+}
+
+/* ========== METALLIC SHINE EFFECT - DIAGONAL ========== */
+
+.metallic-shine-bubble {
+  position: relative;
+  overflow: hidden;
+  animation: gentleFloat 4s ease-in-out infinite;
+}
+
+.metallic-shine-effect {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.3) 45%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.3) 55%,
+    transparent 60%,
+    transparent 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.3s ease;
+}
+
+/* Random shine animation trigger */
+.metallic-shine-bubble.shine-active .metallic-shine-effect {
+  animation: metallicShineActive 1.5s ease-in-out;
+}
+
+@keyframes metallicShineActive {
+  0% {
+    transform: translate(-150%, -150%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-25%, -25%);
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100%, 100%);
+    opacity: 0;
+  }
+}
+
+.metallic-shine-bubble:hover {
+  transform: scale(1.15) !important;
+  box-shadow: 
+    0 12px 48px rgba(0, 0, 0, 0.4),
+    inset 0 2px 8px rgba(255, 255, 255, 0.2) !important;
+}
+
+.metallic-shine-bubble:hover .metallic-shine-effect {
+  animation: metallicShineHover 1.5s ease-in-out infinite;
+  opacity: 1;
+}
+
+@keyframes metallicShineHover {
+  0% {
+    transform: translate(-150%, -150%);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-25%, -25%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100%, 100%);
+    opacity: 1;
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .metallic-shine-bubble:hover {
+    transform: scale(1.08) !important;
+  }
+  
+  .metallic-shine-effect {
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 42%,
+      rgba(255, 255, 255, 0.25) 47%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.25) 53%,
+      transparent 58%,
+      transparent 100%
+    );
+  }
+}
+
+/* Cursor visibility */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor-wrapper {
+    display: none !important;
+  }
+}
+
+/* MOBILE: Ensure smooth scrolling and prevent overflow */
+@media (max-width: 768px) {
+  body {
+    overscroll-behavior: none;
+  }
+  
+  /* Prevent horizontal scroll on mobile */
+  html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
 }
