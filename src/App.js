@@ -22,6 +22,7 @@ const App = () => {
   const [isMobile, setIsMobile] = useState(false);
   const cursorRef = useRef({ x: 0, y: 0, prevX: 0, prevY: 0, velocity: 0 });
   const spotlightRef = useRef({ x: 0, y: 0 });
+  const [showPsychologyTab, setShowPsychologyTab] = useState(false);
 
   const [cursorVisible, setCursorVisible] = useState(true);
 
@@ -32,7 +33,7 @@ const App = () => {
   const [copiedPhone, setCopiedPhone] = useState(false);
 
   const email = "dylangorrah3@gmail.com";
-  const phone = "+27 067 702 0221";
+  const phone = "+27 67 702 0221";
   const whatsappLink = "https://wa.me/27677020221?text=Hi%2C%20I%20saw%20your%20Website%2C%20and%20I%20think%20it's%20Awesome%2C";
 
   const copyToClipboard = (text, type) => {
@@ -159,6 +160,13 @@ const App = () => {
     
     const handleScroll = () => {
       setScrollY(window.scrollY);
+      
+      // Detect when scrolled past hero section (profile picture area)
+      const heroSection = document.getElementById('hero');
+      if (heroSection) {
+        const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+        setShowPsychologyTab(window.scrollY > heroBottom - 200);
+      }
     };
     
     window.addEventListener('scroll', handleScroll);
@@ -185,38 +193,6 @@ const App = () => {
     return () => observer.disconnect();
   }, [mounted]);
 
- // ========== ENHANCED PSYCHOLOGY BUTTON GLOW PULSE ANIMATION ==========
-  useEffect(() => {
-    const schedulePulse = () => {
-      setTimeout(() => {
-        const psychButton = document.querySelector('.psychology-btn');
-        
-        if (psychButton) {
-          // First pulse
-          psychButton.classList.add('glow-pulse-active');
-          
-          setTimeout(() => {
-            psychButton.classList.remove('glow-pulse-active');
-            
-            // Second pulse after 400ms
-            setTimeout(() => {
-              psychButton.classList.add('glow-pulse-active');
-              
-              setTimeout(() => {
-                psychButton.classList.remove('glow-pulse-active');
-              }, 600);
-            }, 400);
-          }, 600);
-        }
-        
-        // Schedule next double pulse after 7 seconds
-        schedulePulse();
-      }, 7000);
-    };
-
-    // Start the pulse cycle
-    schedulePulse();
-  }, []);
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -357,7 +333,12 @@ const App = () => {
       {/* Dust Particles - Above plant image */}
       <DustParticles plantOpacity={plantOpacity} />
 
-      <div className="fixed top-0 left-1/2 transform -translate-x-1/2 z-50">
+      {/* Psychology Tab - Slides down when past hero */}
+      <div 
+        className={`fixed top-0 left-1/2 transform -translate-x-1/2 z-50 transition-transform duration-500 ease-out ${
+          showPsychologyTab ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
         <button
           onClick={() => setAboutExpanded(!aboutExpanded)}
           className="psychology-btn px-4 md:px-6 py-2.5 glass-morph text-white/90 rounded-b-xl text-[10px] md:text-xs font-semibold btn-linear tracking-widest hover:text-white hover:bg-white/5 shadow-lg"
@@ -381,21 +362,21 @@ const App = () => {
               <div>
                 <p className="font-semibold text-white/90 mb-1.5">Psychology in Design</p>
                 <p className="text-white/60">
-                  I blend <span className="font-bold text-white/90">psychology</span> and <span className="font-bold text-white/90">minimalism</span> to guide users' eyes exactly where they need to be. Every visual and animation has a purpose — to make the experience flow naturally and feel effortless. This site employs the <span className="text-white/90">"F-Pattern"</span> — a proven <span className="font-bold text-white/90">psychology</span> principle on how people scan new websites. <span className="font-bold text-white/90">[psychology of eye attention is the reason why you're reading here]</span>
+                  I blend <span className="font-bold text-white/90">psychology</span> and <span className="font-bold text-white/90">minimalism</span> to guide users' eyes exactly where they need to be. Every visual and animation has a purpose – to make the experience flow naturally and feel effortless. This site employs the <span className="text-white/90">"F-Pattern"</span> – a proven <span className="font-bold text-white/90">psychology</span> principle on how people scan new websites. <span className="font-bold text-white/90">[psychology of eye attention is the reason why you're reading here]</span>
                 </p>
               </div>
 
               <div>
                 <p className="font-semibold text-white/90 mb-1.5">Strategic Animations</p>
                 <p className="text-white/60">
-                  <span className="font-bold text-white/90">A sleek orbital animation where my tech stack circles around me. The technologies I’m sharpest in flash with a cutting blade glint as it passes</span> a clean, high-value visual that radiates precision and skill.
+                  <span className="font-bold text-white/90">A sleek orbital animation where my tech stack circles around me. The technologies I'm sharpest in flash with a cutting blade glint as it passes</span> a clean, high-value visual that radiates precision and skill.
                 </p>
               </div>
 
               <div>
                 <p className="font-semibold text-white/90 mb-1.5">Minimalism</p>
                 <p className="text-white/60">
-                  Saying just what needs to be said — no clutter, maximum impact.
+                  Saying just what needs to be said – no clutter, maximum impact.
                 </p>
               </div>
 
@@ -416,6 +397,9 @@ const App = () => {
           </div>
         )}
       </div>
+      
+      {/* END OF PART 1 - Continue with Part 2 */}
+      {/* START OF PART 2 - This continues directly after Part 1 */}
 
       <div className="hidden md:flex fixed right-8 top-8 z-50 flex-col gap-3">
         <button
@@ -505,7 +489,7 @@ const App = () => {
           }}
           className="px-6 py-2.5 glass-morph text-white/90 rounded-lg font-medium text-xs btn-linear tracking-wider hover:text-white hover:bg-white/10"
         >
-          References(COMING SOON)
+          References(Request)
         </button>
 
         <button
@@ -574,7 +558,7 @@ const App = () => {
               </button>
             </div>
           </div>
-  )}
+        )}
       </div>
 
       {/* Email Modal */}

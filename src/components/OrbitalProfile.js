@@ -12,7 +12,7 @@ const OrbitalProfile = ({ scrollY }) => {
     // Inner orbit - Core Expertise (METALLIC)
     { name: 'React', color: 'from-cyan-400 to-blue-500', orbit: 1, angle: 0, speed: 0.4, hasMetallic: true },
     { name: 'JavaScript', color: 'from-yellow-400 to-yellow-600', orbit: 1, angle: 51.4, speed: 0.4, hasMetallic: true },
-    { name: 'TypeScript', color: 'from-blue-500 to-blue-700', orbit: 1, angle: 102.8, speed: 0.4, hasMetallic: false },
+    { name: 'TypeScript', color: 'from-blue-500 to-blue-700', orbit: 1, angle: 102.8, speed: 0.4, hasMetallic: true },
     { name: 'Tailwind', color: 'from-cyan-400 to-blue-600', orbit: 1, angle: 154.2, speed: 0.4, hasMetallic: true },
     { name: 'HTML5', color: 'from-orange-500 to-red-600', orbit: 1, angle: 205.6, speed: 0.4, hasMetallic: true },
     { name: 'CSS3', color: 'from-blue-400 to-blue-600', orbit: 1, angle: 257, speed: 0.4, hasMetallic: true },
@@ -28,7 +28,7 @@ const OrbitalProfile = ({ scrollY }) => {
     
     // Outer orbit - Familiar (SOME METALLIC)
     { name: 'Kotlin', color: 'from-purple-500 to-pink-500', orbit: 3, angle: 0, speed: 0.25, hasMetallic: false },
-    { name: 'Python', color: 'from-blue-500 to-yellow-500', orbit: 3, angle: 60, speed: 0.25, hasMetallic: false },
+    { name: 'C#', color: 'from-blue-500 to-yellow-500', orbit: 3, angle: 60, speed: 0.25, hasMetallic: true },
     { name: 'ASP.NET', color: 'from-blue-600 to-purple-700', orbit: 3, angle: 120, speed: 0.25, hasMetallic: true },
     { name: 'Flutter', color: 'from-cyan-300 to-blue-400', orbit: 3, angle: 180, speed: 0.25, hasMetallic: false },
     { name: 'Android Studio', color: 'from-green-400 to-green-600', orbit: 3, angle: 240, speed: 0.25, hasMetallic: false },
@@ -106,26 +106,43 @@ const OrbitalProfile = ({ scrollY }) => {
     return () => cancelAnimationFrame(animationFrame);
   }, []);
 
-  // IMPROVED: Slower scroll-based fade with extended visibility range
+  // IMPROVED: More responsive scroll-based fade - directly tied to scroll position
   const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
   const sectionHeight = 900;
   
+  // Calculate where the section is relative to viewport
   const sectionTop = sectionOffset - scrollY;
+  const sectionBottom = sectionTop + sectionHeight;
   const sectionCenter = sectionTop + (sectionHeight / 2);
   const viewportCenter = viewportHeight / 2;
   
-  const distanceFromCenter = Math.abs(sectionCenter - viewportCenter);
+  let sectionOpacity = 0;
   
-  // INCREASED fade range for slower disappearing (was 400, now 800)
-  const fadeRange = 800;
-  let sectionOpacity = 1;
-  
-  if (distanceFromCenter < fadeRange) {
-    // More gradual fade curve
-    const fadeProgress = distanceFromCenter / fadeRange;
-    sectionOpacity = 1 - Math.pow(fadeProgress, 1.5); // Power curve for smoother fade
-  } else {
-    sectionOpacity = 0;
+  // Section is entering from bottom
+  if (sectionBottom > viewportHeight && sectionTop < viewportHeight) {
+    const visibleHeight = viewportHeight - sectionTop;
+    const fadeInProgress = Math.min(visibleHeight / (viewportHeight * 0.3), 1);
+    sectionOpacity = fadeInProgress;
+  }
+  // Section is fully visible or in center of viewport
+  else if (sectionTop >= 0 && sectionBottom <= viewportHeight) {
+    sectionOpacity = 1;
+  }
+  else if (sectionTop < viewportCenter && sectionBottom > viewportCenter) {
+    // Calculate distance from center
+    const distanceFromCenter = Math.abs(sectionCenter - viewportCenter);
+    const maxDistance = viewportHeight * 0.6; // Increased range for smoother fade
+    
+    if (distanceFromCenter < maxDistance) {
+      const fadeProgress = distanceFromCenter / maxDistance;
+      sectionOpacity = 1 - Math.pow(fadeProgress, 1.2); // Smoother curve
+    }
+  }
+  // Section is leaving from top
+  else if (sectionTop < 0 && sectionBottom > 0) {
+    const visibleHeight = sectionBottom;
+    const fadeOutProgress = Math.min(visibleHeight / (viewportHeight * 0.4), 1);
+    sectionOpacity = fadeOutProgress;
   }
   
   sectionOpacity = Math.max(0, Math.min(1, sectionOpacity));
@@ -169,7 +186,7 @@ const OrbitalProfile = ({ scrollY }) => {
       className="relative w-full flex justify-center items-center my-32 cursor-none"
       style={{
         opacity: sectionOpacity,
-        transition: 'opacity 0.3s ease-out',
+        transition: 'opacity 0.2s ease-out',
       }}
     >
       <div 

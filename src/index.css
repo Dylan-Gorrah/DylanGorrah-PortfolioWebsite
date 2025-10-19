@@ -167,44 +167,6 @@ body::-webkit-scrollbar {
   }
 }
 
-/* ========== GLOW PULSE ANIMATION FOR PSYCHOLOGY BUTTON ========== */
-@keyframes glowPulse {
-  0% {
-    box-shadow: 
-      0 4px 20px rgba(255, 255, 255, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-  50% {
-    box-shadow: 
-      0 4px 40px rgba(255, 255, 255, 0.4),
-      0 8px 60px rgba(255, 255, 255, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.4);
-  }
-  100% {
-    box-shadow: 
-      0 4px 20px rgba(255, 255, 255, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-}
-
-@keyframes textGlow {
-  0% {
-    text-shadow: 0 0 0 rgba(255, 255, 255, 0);
-  }
-  50% {
-    text-shadow: 
-      0 0 10px rgba(255, 255, 255, 0.8),
-      0 0 20px rgba(255, 255, 255, 0.6),
-      0 0 30px rgba(255, 255, 255, 0.4);
-  }
-  100% {
-    text-shadow: 0 0 0 rgba(255, 255, 255, 0);
-  }
-}
-
 /* ========== PREMIUM PSYCHOLOGY BUTTON ========== */
 
 .psychology-btn {
@@ -294,15 +256,6 @@ body::-webkit-scrollbar {
   50% {
     background-position: 100% center;
   }
-}
-
-/* GLOW PULSE ACTIVE STATE */
-.psychology-btn.glow-pulse-active {
-  animation: glowPulse 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.psychology-btn.glow-pulse-active .btn-text {
-  animation: textGlow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Mobile optimizations */

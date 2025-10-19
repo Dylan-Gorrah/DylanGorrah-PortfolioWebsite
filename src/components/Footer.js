@@ -7,7 +7,7 @@ const Footer = () => {
   const [copiedPhone, setCopiedPhone] = useState(false);
 
   const email = "dylangorrah3@gmail.com";
-  const phone = "+27 067 702 0221";
+  const phone = "+27 67 702 0221";
   const whatsappLink = "https://wa.me/27677020221?text=Hi%2C%20I%20saw%20your%20Website%2C%20and%20I%20think%20it's%20Awesome%2C";
 
   const copyToClipboard = (text, type) => {
